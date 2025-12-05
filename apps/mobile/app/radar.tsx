@@ -1,39 +1,36 @@
-import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import * as Location from "expo-location";
-import { setUserLocation } from "../src/services/location";
+import { Slot, Stack } from "expo-router";
+import { View, StatusBar } from "react-native";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "../src/lib/queryClient";
 
-export default function Radar() {
-  const [pos, setPos] = useState<Location.LocationObjectCoords | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
+// Configuración obligatoria para NativeWind en Web/Móvil
+import { NativeWindStyleSheet } from "nativewind";
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") { setStatus("Permiso denegado"); return; }
-      const l = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
-      setPos(l.coords);
-    })();
-  }, []);
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 
-  const publish = async () => {
-    if (!pos) return;
-    setStatus("Publicando ubicación...");
-    await setUserLocation({ lat: pos.latitude, lng: pos.longitude });
-    setStatus("Ubicación publicada");
-  };
-
+export default function Layout() {
   return (
-    <View style={{ flex: 1, padding: 16 }}>
-      <Text style={{ color: "#fff", fontSize: 22 }}>Radar</Text>
-      <View style={{ flex: 1, borderColor: "#222", borderWidth: 1, borderRadius: 8, marginTop: 12, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ color: "#888" }}>Mapa oscuro (placeholder)</Text>
-        {pos && <Text style={{ color: "#7df", marginTop: 8 }}>Lat: {pos.latitude.toFixed(5)} Lng: {pos.longitude.toFixed(5)}</Text>}
+    <QueryClientProvider client={queryClient}>
+      <View className="flex-1 bg-night-900">
+        <StatusBar barStyle="light-content" />
+        {/* Usamos Stack para navegación nativa fluida */}
+        <Stack 
+          screenOptions={{
+            headerStyle: { backgroundColor: '#0a0a0a' },
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold' },
+            contentStyle: { backgroundColor: '#0a0a0a' } // Fondo night-900
+          }}
+        >
+           <Stack.Screen name="index" options={{ headerShown: false }} />
+           <Stack.Screen name="login" options={{ title: 'Login' }} />
+           <Stack.Screen name="radar" options={{ title: 'Radar Ops', headerTransparent: true }} />
+           <Stack.Screen name="camera" options={{ title: 'Cámara' }} />
+           <Stack.Screen name="room" options={{ title: 'Sala' }} />
+        </Stack>
       </View>
-      <TouchableOpacity onPress={publish} style={{ backgroundColor: "#111", padding: 12, borderRadius: 8, marginTop: 12 }}>
-        <Text style={{ color: "#7df", textAlign: "center" }}>Estoy aquí / Ayuda</Text>
-      </TouchableOpacity>
-      {status && <Text style={{ color: "#ccc", marginTop: 8 }}>{status}</Text>}
-    </View>
+    </QueryClientProvider>
   );
 }

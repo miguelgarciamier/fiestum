@@ -10,17 +10,23 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.12",
+    "clsx": "^2.1.1",
     "expo": "~51.0.10",
-    "expo-router": "^4.0.0",
-    "react": "18.2.0",
-    "react-native": "0.74.3",
-    "expo-location": "~17.0.1",
     "expo-camera": "~15.0.1",
-    "expo-linking": "~5.0.2",
-    "firebase": "^10.12.0"
+    "expo-linking": "~6.3.1",
+    "expo-location": "~17.0.1",
+    "expo-router": "~3.5.23",
+    "firebase": "^10.12.0",
+    "nativewind": "^2.0.11",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^3.3.2",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
-    "typescript": "^5.6.2"
+    "typescript": "~5.3.3"
   }
 }
