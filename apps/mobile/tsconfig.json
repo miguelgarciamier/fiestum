@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": ["es2017"],
+    "lib": [
+      "es2017"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
@@ -14,8 +16,14 @@
     "jsx": "react-native",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["src", "app"]
+  "include": [
+    "src",
+    "app"
+  ],
+  "extends": "expo/tsconfig.base"
 }

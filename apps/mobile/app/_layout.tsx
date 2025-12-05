@@ -1,10 +1,25 @@
-import { Slot } from "expo-router";
-import { View } from "react-native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { useRef } from "react";
 
-export default function Layout() {
+export default function RootLayout() {
+  const queryClient = useRef(new QueryClient()).current;
+
   return (
-    <View style={{ flex: 1, backgroundColor: "#000" }}>
-      <Slot />
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <StatusBar style="light" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: "#020617", // night-900
+            },
+          }}
+        />
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }
