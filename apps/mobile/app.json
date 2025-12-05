@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "NightOps",
+    "slug": "nightops",
+    "scheme": "nightops",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "plugins": [
+      "expo-router",
+      ["expo-camera"],
+      ["expo-location"]
+    ],
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    }
+  }
+}
