@@ -11,7 +11,11 @@ export default function Login() {
       const user = await anonymousLogin();
       setStatus(`OK: ${user.uid}`);
     } catch (e: any) {
-      setStatus(e?.message ?? "Error");
+      const msg = e?.message ?? "Error";
+      const hint = msg.includes("Firebase config missing")
+        ? "Configura apps/mobile/.env con las claves EXPO_PUBLIC_FIREBASE_*"
+        : null;
+      setStatus(hint ? `${msg}. ${hint}` : msg);
     }
   };
 
